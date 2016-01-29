@@ -1,6 +1,18 @@
 README for bMotion
 ------------------
 
+`Hey Keiro!  My name is DivineLightning and I am running eggdrop v1.8.0+infiniteinfo, on Linux 3.13.0-76-generic.`
+
+This is the output one would receive when `telnet`ing to the bot.
+
+Currently, there are a few functions that're enabled on the bot in addition to the bMotion code.
+
+Notably, `!sysinfo` which outputs a limited set of system information on the server that `DivineLightning` is running on.
+
+You may submit fixes via `Pull Requests` here.
+
+---------------------------------------------------------------------
+
 http://www.bmotion.net
 
 Thanks for trying out bMotion!

@@ -1,6 +1,5 @@
 # Responses
 # $Id$
-# vim: foldmethod=indent syntax=OFF
 # This file is syntax=OFF for vim because a) it doesn't really need it and b) it makes vim sloooow
 #
 ###############################################################################
@@ -1763,6 +1762,7 @@ bMotion_abstract_register "goodnights" {
 	"nn %%"
 	"don't have really bad dreams about a nasty man coming to strangle you in your bed"
 	"sleep well %%"
+	"good night%|and big balls."
 }
 
 bMotion_abstract_register "afro_1" {
@@ -4746,6 +4746,7 @@ bMotion_abstract_register "go_sleeps" {
 	"/hits the sack"
 	"/hits the hay"
 	"/hits the hay%|ow, my hay%|wait, what?%|must be bedtime"
+	"goodnight%|and big balls."
 }
 
 bMotion_abstract_register "go_sleeps_male" {
@@ -6069,6 +6070,37 @@ bMotion_abstract_register "current_status" {
 	"%VAR{answerWheres}"
 }
 
+bMotion_abstract_register "vehicle" {
+  "trike"
+  "bike"
+  "car"
+  "hang-glider"
+  "helicopter"
+  "skateboard"
+  "tandem"
+}
+
+bMotion_abstract_register "wowcher" {
+  "Imagine yourself %VAR{wowcher_event} ... with %VAR{wowcher_with} ... and %VAR{wowcher_final}%|%BOT\[wowcher!\]"
+  "Imagine drooling over a %VAR{sillyThings:strip} ... and %VAR{wowcher_with}%|%BOT\[wowcher!\]"
+  "Imagine looking incredible ... on a kids' electric %VAR{vehicle}%|%BOT\[wowcher!\]"
+  "Imagine visiting beautiful %VAR{locations} ... with %VAR{wowcher_with} ... and %VAR{wowcher_final}%|%BOT\[wowcher!\]"
+}
+
+bMotion_abstract_register "wowcher_event" {
+  "riding a %VAR{animals}"
+}
+
+bMotion_abstract_register "wowcher_with" {
+  "the most amazing hair"
+  "%NUMBER{10}kg of %VAR{foods}"
+  "dazzling white %VAR{bodypart:bothmixin,plural}"
+}
+
+bMotion_abstract_register "wowcher_final" {
+  "%NUMBER{100} toilet rolls"
+  "a large electronic steel %VAR{sillyThings:strip}"
+}
 
 bMotion_abstract_add_filter "_all" "\{strip\}\}"
 bMotion_abstract_add_filter "_all" "\}\{strip\}"

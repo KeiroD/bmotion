@@ -1,0 +1,87 @@
+# vim: ft=tcl
+source "tests/eggdrop-shim.tcl"
+
+set botnick "NoTopic"
+set bMotionRoot "."
+
+source "bMotion.tcl"
+
+package require tcltest
+namespace import ::tcltest::*
+
+eval ::tcltest::configure $argv
+
+test empty_queue-1 "queue should start empty" -body {
+	bMotion_queue_size
+} -result 0
+
+test empty_queue-2 "queue should not be frozen" -body {
+	return $::bMotion_queue_runny
+} -result 1
+
+test add_queue-1 "queue an entry up with no delay" -body {
+	bMotion_queue_add #test "blah"
+
+	lindex $::bMotion_queue 0
+} -result {2 #test blah}
+
+test add_queue-2 "queue an entry up with specified delay" {
+	bMotion_queue_add #test "blah2" 10
+
+	lindex $::bMotion_queue 1
+} {10 #test blah2}
+
+test freeze_queue-1 "freeze the queue" -body {
+	bMotion_queue_freeze
+
+	return $::bMotion_queue_runny
+} -result {0}
+
+test freeze-queue-2 "frozen queue doesn't run" -body {
+	bMotion_queue_run
+
+	return [llength $::bMotion_queue]
+} -result {2}
+
+test thaw_queue-1 "thaw the queue" -body {
+	bMotion_queue_thaw
+
+	return $::bMotion_queue_runny
+} -result {1}
+
+test get_queue_delay-1 "check queue delay" -body {
+	return [bMotion_queue_get_delay]
+} -result {4}
+
+test add_queue_head-1 "queue an entry to the head of the queue" -body {
+	bMotion_queue_add_now #test "blah-now"
+
+	lindex $::bMotion_queue 2
+} -result {0 #test blah-now}
+
+test queue_timer-1 "queue timer was added" -body {
+	shim_check_for_timer utimer bMotion_queue_callback
+} -result {1}
+
+test queue_dupecheck-1 "queue dupecheck should remove duplicate entry" -body {
+	set ::bMotion_queue [list { 0 "#test" "testing" }]
+	bMotion_queue_dupecheck "testing" "#test"
+
+	llength $::bMotion_queue
+} -result {0}
+
+test queue_dupecheck-2 "queue dupecheck should leave non-duplicate entry" -body {
+	set ::bMotion_queue [list { 0 "#test" "testing" }]
+	bMotion_queue_dupecheck "hello" "#test"
+
+	llength $::bMotion_queue
+} -result {1}
+
+test queue_dupecheck-3 "queue dupecheck should leave other channel's entry" -body {
+	set ::bMotion_queue [list { 0 "#test" "testing" }]
+	bMotion_queue_dupecheck "testing" "#molsoft"
+
+	llength $::bMotion_queue
+} -result {1}
+
+cleanupTests
